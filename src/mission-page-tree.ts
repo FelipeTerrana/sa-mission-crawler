@@ -1,4 +1,5 @@
 import AsyncTree from "./async-tree";
+import { missionExceptions } from "./mission-exceptions";
 
 const jquery = require("jquery");
 const axios = require("axios");
@@ -20,7 +21,22 @@ export default class MissionPageTree implements AsyncTree {
         }
 
         this._name = MissionPageTree.getNameFromJquery(htmlJquery);
-        this._childrenURLs = MissionPageTree.getChildrenURLsFromJquery(htmlJquery);
+
+        const currentMissionException = missionExceptions.find(exception => exception.name === this.name);
+
+        if(currentMissionException) {
+            if(currentMissionException.isInvalid) {
+                throw new NotMissionPageError();
+            }
+
+            if(currentMissionException.childrenURLs) {
+                this._childrenURLs = currentMissionException.childrenURLs;
+            }
+        }
+
+        if(!this._childrenURLs) {
+            this._childrenURLs = MissionPageTree.getChildrenURLsFromJquery(htmlJquery);
+        }
     }
 
     get name(): string {
