@@ -5,6 +5,10 @@
 
 This is a Typescript/Node based tool built to visualize connections between the main story missions in GTA San Andreas. This way, it's possible to easily view which missions are unlocked by a specific mission, and also which ones need to be completed in order to unlock another.
 
+The final result should look like this:
+
+![](https://raw.githubusercontent.com/FelipeTerrana/sa-mission-crawler/main/sa-missions.svg)
+
 Even though it's been developed and tested with San Andreas missions in mind, this crawler can also be used (given some minor tweaks) in other GTA games since the page structures don't change too much. The code is also easily adaptable to support games from other franchises, but that could require some more work.
 
 
