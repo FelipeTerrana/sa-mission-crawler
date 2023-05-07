@@ -1,6 +1,20 @@
-// TODO implement
 export default class Digraph {
-    addEdge(from: string, to: string): void { }
+    private edgesByNode: {[node: string]: string[]} = {};
 
-    generateDotString(): string { return ""; }
+
+
+    addEdge(from: string, to: string): void {
+        this.edgesByNode[from] = this.edgesByNode[from] || [];
+        this.edgesByNode[to] = this.edgesByNode[to] || [];
+
+        this.edgesByNode[from].push(to);
+    }
+
+    generateDotString(): string {
+        return `\
+            digraph G {
+            ${Object.keys(this.edgesByNode).map(node => `
+                "${node}" -> { ${this.edgesByNode[node].map(edgeNode => `"${edgeNode}"`).join(", ")} }`).join(";\n")}
+            }`;
+    }
 }
